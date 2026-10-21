@@ -13,7 +13,7 @@ ASP.NET Core MVC (.NET 10) + Entity Framework Core + SQL Server (LocalDB).
 
 ### 2. Скачать проект
 ```bash
-git clone https://github.com/<ваш-логин>/Delizioso.git
+git clone https://github.com/justikusX/Delizioso.git
 cd Delizioso
 dotnet tool restore
 ```
