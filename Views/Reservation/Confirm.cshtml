@@ -1,0 +1,97 @@
+@model ConfirmReservationViewModel
+@{
+    ViewData["Title"] = "Confirm reservation";
+    ViewData["Nav"] = "Reservation";
+    ViewData["BodyClass"] = "modal-page";
+    var when = Model.Date!.Value.ToDateTime(Model.Time!.Value);
+}
+
+<section class="modal-stage">
+    <partial name="_ModalStage" model='"/Reservation"' />
+    <div class="modal-card">
+        <partial name="_ModalTop" />
+        <h1 class="title center">Reservation</h1>
+
+        <p class="hold-banner" data-hold-minutes="@ReservationRules.HoldMinutes">
+            <span data-hold-text>Due to limited availability, we can hold this table for you for <b data-hold-left>@(ReservationRules.HoldMinutes):00 minutes</b></span>
+            <span data-hold-expired hidden>Your hold has expired. <a asp-action="Index">Choose the time again</a> to make sure the table is still free.</span>
+        </p>
+
+        <form asp-action="Confirm" method="post" class="res-confirm" novalidate>
+            <input type="hidden" name="Date" value="@Model.Date!.Value.ToString("yyyy-MM-dd")" />
+            <input type="hidden" name="Time" value="@Model.Time!.Value.ToString("HH:mm")" />
+            <input type="hidden" asp-for="Guests" />
+            <input type="hidden" asp-for="Modify" />
+
+            <div class="res-col res-col-form">
+                <h2 class="res-h">Data order</h2>
+                <div asp-validation-summary="ModelOnly" class="auth-error"></div>
+
+                <label class="big-field">
+                    <span class="sr-only">First name</span>
+                    <input asp-for="FirstName" placeholder="First name" autocomplete="given-name" />
+                    <span asp-validation-for="FirstName" class="field-error"></span>
+                </label>
+                <label class="big-field">
+                    <span class="sr-only">Last name</span>
+                    <input asp-for="LastName" placeholder="Last name" autocomplete="family-name" />
+                </label>
+                <div class="big-field phone-field">
+                    <label class="phone-code">
+                        <span class="sr-only">Country code</span>
+                        <select asp-for="PhoneCode">
+                            @foreach (var p in FormOptions.PhoneCodes)
+                            {
+                                <option value="@p.Code">@p.Country @p.Code</option>
+                            }
+                        </select>
+                    </label>
+                    <label class="phone-number">
+                        <span class="sr-only">Phone number</span>
+                        <input asp-for="Phone" type="tel" placeholder="Phone number" autocomplete="tel-national" />
+                    </label>
+                    <span asp-validation-for="Phone" class="field-error"></span>
+                </div>
+                <label class="big-field">
+                    <span class="sr-only">Email address</span>
+                    <input asp-for="Email" type="email" placeholder="Email address" autocomplete="email" />
+                    <span asp-validation-for="Email" class="field-error"></span>
+                </label>
+                <label class="big-field select-arrow">
+                    <span class="sr-only">Occasion</span>
+                    <select asp-for="Occasion">
+                        <option value="">Select an occasion (optional)</option>
+                        @foreach (var o in FormOptions.Occasions)
+                        {
+                            <option value="@o">@o</option>
+                        }
+                    </select>
+                </label>
+                <label class="big-field">
+                    <span class="sr-only">Special request</span>
+                    <textarea asp-for="SpecialRequest" rows="6" placeholder="Add a special request"></textarea>
+                </label>
+
+                <label class="round-check">
+                    <input asp-for="Newsletter" type="checkbox" />
+                    <span>Sign me up to receive dining offers and news from this restaurant by email.</span>
+                </label>
+            </div>
+
+            <div class="res-col res-col-side">
+                <div class="res-card">
+                    <h2 class="res-h">Reservation detail</h2>
+                    <partial name="_Detail" model="(when, Model.Guests!.Value)" />
+                    <a class="res-change" asp-action="Index" asp-route-modify="@Model.Modify">Change date or time</a>
+                </div>
+                <partial name="_RestaurantInfo" />
+            </div>
+
+            <button class="booking-submit res-submit" type="submit" data-hold-submit>@(Model.Modify != null ? "Save changes" : "Confirm reservation")</button>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/reservation.js" asp-append-version="true"></script>
+}

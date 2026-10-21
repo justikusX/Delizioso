@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Delizioso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Raleway:wght@400;700&family=Tinos:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="auth-body">
+    <div class="auth">
+        <div class="auth-panel">
+            <a class="auth-logo" href="/" aria-label="Delizioso home"><span class="logo-mark">D</span></a>
+            <div class="auth-form">
+                @RenderBody()
+            </div>
+            <p class="auth-copyright">Copyright &copy; @DateTime.Now.Year Delizioso</p>
+        </div>
+        <div class="auth-image" role="img" aria-label="Pancakes with blueberries"></div>
+    </div>
+</body>
+</html>

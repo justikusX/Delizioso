@@ -1,0 +1,114 @@
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+    ViewData["Nav"] = "Order";
+    var culture = System.Globalization.CultureInfo.InvariantCulture;
+    var later = OrderRules.LaterSlots(DateTime.Now).ToList();
+    var today = DateTime.Today;
+}
+
+<section class="checkout">
+    <div class="container checkout-inner">
+        <div class="checkout-head">
+            <a class="back-circle" asp-action="Index" aria-label="Back to menu"><partial name="_Icons" model='"back"' /></a>
+            <h1 class="title">Checkout</h1>
+        </div>
+
+        <form asp-action="Checkout" method="post" novalidate data-checkout>
+            <input type="hidden" asp-for="CartJson" data-cart-json />
+            <input type="hidden" asp-for="VoucherCode" data-voucher-code />
+            <input type="hidden" asp-for="Latitude" data-ship-lat />
+            <input type="hidden" asp-for="Longitude" data-ship-lng />
+            <div asp-validation-summary="ModelOnly" class="auth-error"></div>
+
+            <div class="co-section" data-shipping-section>
+                <h2 class="co-h">Shipping address</h2>
+                <div class="co-address">
+                    <input asp-for="Address" readonly placeholder="Choose where we should deliver" data-ship-address />
+                    <a class="co-change" asp-action="Shipping" data-ship-change>Change</a>
+                </div>
+                <span asp-validation-for="Address" class="field-error"></span>
+                @if (ViewBag.SavedAddresses is List<Address> saved && saved.Count > 0)
+                {
+                    <div class="co-saved" aria-label="Your saved addresses">
+                        @foreach (var a in saved)
+                        {
+                            <button type="button" data-saved-address="@a.Text" data-lat="@a.Latitude?.ToString(culture)" data-lng="@a.Longitude?.ToString(culture)" title="@a.Text">@a.Text</button>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="co-section">
+                <h2 class="co-h">Order data</h2>
+                <div class="co-grid">
+                    <label class="co-field"><span class="sr-only">First name</span><input asp-for="FirstName" placeholder="First name" autocomplete="given-name" /><span asp-validation-for="FirstName" class="field-error"></span></label>
+                    <label class="co-field"><span class="sr-only">Last name</span><input asp-for="LastName" placeholder="Last name" autocomplete="family-name" /></label>
+                    <div class="co-field phone-field co-phone">
+                        <label class="phone-code"><span class="sr-only">Country code</span>
+                            <select asp-for="PhoneCode">
+                                @foreach (var p in FormOptions.PhoneCodes) { <option value="@p.Code">@p.Country @p.Code</option> }
+                            </select>
+                        </label>
+                        <label class="phone-number"><span class="sr-only">Phone number</span><input asp-for="Phone" type="tel" placeholder="Phone number" autocomplete="tel-national" /></label>
+                    </div>
+                    <label class="co-field"><span class="sr-only">Email address</span><input asp-for="Email" type="email" placeholder="Email address" autocomplete="email" /><span asp-validation-for="Email" class="field-error"></span></label>
+                    <span asp-validation-for="Phone" class="field-error co-phone-error"></span>
+                    <label class="co-field co-wide"><span class="sr-only">Note</span><textarea asp-for="Note" rows="4" placeholder="Note"></textarea></label>
+                </div>
+            </div>
+
+            <div class="co-section">
+                <h2 class="co-h">Order time</h2>
+                <div class="co-radios">
+                    <label class="round-check"><input type="radio" asp-for="OrderTime" value="now" /> <span>Order now</span></label>
+                    <label class="round-check co-later"><input type="radio" asp-for="OrderTime" value="later" data-later-radio /> <span>Order later</span>
+                        <select asp-for="LaterAt" data-later-select aria-label="Order time">
+                            @foreach (var t in later)
+                            {
+                                <option value="@t.ToString("yyyy-MM-ddTHH:mm", culture)">@(t.Date == today ? "Today" : "Tomorrow") @t.ToString("h:mm tt", culture)</option>
+                            }
+                        </select>
+                    </label>
+                </div>
+                <span asp-validation-for="LaterAt" class="field-error"></span>
+            </div>
+
+            <div class="co-section">
+                <h2 class="co-h">Order method</h2>
+                <div class="co-radios">
+                    @foreach (var m in OrderRules.Methods)
+                    {
+                        <label class="round-check"><input type="radio" asp-for="Method" value="@m.Value" data-method /> <span>@m.Label</span></label>
+                    }
+                </div>
+            </div>
+
+            <div class="co-section">
+                <h2 class="co-h">Payment method</h2>
+                <div class="co-payments">
+                    @foreach (var p in OrderRules.Payments)
+                    {
+                        <label class="round-check co-pay"><input type="radio" asp-for="Payment" value="@p.Value" /> <span>@p.Label</span></label>
+                    }
+                </div>
+                <p class="co-hint">Online payment isn't connected yet: for card, virtual account or bank transfer our staff will contact you with the payment details.</p>
+            </div>
+
+            <label class="square-check">
+                <input asp-for="AcceptTerms" type="checkbox" />
+                <span>Choose to indicate that you have read and agree to our Terms of use &amp; Privacy Policy.</span>
+            </label>
+            <span asp-validation-for="AcceptTerms" class="field-error"></span>
+
+            <p class="co-total" data-co-total></p>
+            <button class="booking-submit co-submit" type="submit">Order now</button>
+        </form>
+    </div>
+</section>
+
+<partial name="_DishData" model="(IEnumerable<Dish>)ViewBag.Dishes" />
+@section Scripts {
+    <script src="~/js/order.js" asp-append-version="true"></script>
+    <script src="~/js/checkout.js" asp-append-version="true"></script>
+}

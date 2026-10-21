@@ -1,0 +1,20 @@
+@model OrderPageViewModel
+@{
+    ViewData["Title"] = "Order list";
+    ViewData["Nav"] = "Order";
+}
+
+<section class="order-list-page">
+    <div class="order-list-bar">
+        <a class="back-circle light" asp-action="Index" aria-label="Back to menu"><partial name="_Icons" model='"back"' /></a>
+        <h1>Order list</h1>
+    </div>
+    <div class="container">
+        <div class="order-list page" data-order-list data-with-images></div>
+    </div>
+</section>
+
+<partial name="_DishData" model="Model.Dishes" />
+@section Scripts {
+    <script src="~/js/order.js" asp-append-version="true"></script>
+}

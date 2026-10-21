@@ -1,0 +1,32 @@
+@model Reservation
+@{
+    ViewData["Title"] = "Cancel reservation";
+    ViewData["Nav"] = "Reservation";
+    ViewData["BodyClass"] = "modal-page";
+}
+
+<section class="modal-stage">
+    <partial name="_ModalStage" model='$"/Reservation/{Model.Code}"' />
+    <div class="modal-card">
+        <partial name="_ModalTop" />
+
+        <div class="status-banner orange">
+            <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span><span class="bubble b4"></span>
+            <h1>Are you sure you want to cancel the reservation?</h1>
+            <p><partial name="_Icons" model='"ticket"' /> Booking ID : #@Model.Code</p>
+        </div>
+
+        <div class="res-summary">
+            <div class="ring-photo"><img src="~/img/about-table.png" alt="" /></div>
+            <div class="res-summary-detail">
+                <h2 class="res-h">Reservation detail</h2>
+                <partial name="_Detail" model="(Model.ReservedFor, Model.Guests)" />
+            </div>
+        </div>
+
+        <form class="res-cancel-form" asp-action="Cancel" asp-route-code="@Model.Code" method="post">
+            <a class="res-keep" asp-action="Details" asp-route-code="@Model.Code">Keep my reservation</a>
+            <button class="res-cancel-btn" type="submit">Cancel reservation</button>
+        </form>
+    </div>
+</section>

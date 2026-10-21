@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Shipping address";
+    ViewData["Nav"] = "Order";
+    ViewData["BodyClass"] = "modal-page";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+}
+
+<section class="modal-stage">
+    <a class="modal-close" asp-action="Checkout" aria-label="Close"><partial name="_Icons" model='"x"' /></a>
+    <div class="modal-card ship-card">
+        <partial name="_ModalTop" />
+        <div class="ship-head">
+            <a class="back-circle" asp-action="Checkout" aria-label="Back to checkout"><partial name="_Icons" model='"back"' /></a>
+            <h1>Shipping address</h1>
+        </div>
+
+        <form class="ship-search" data-ship-search>
+            <label class="sr-only" for="ship-query">Address</label>
+            <input id="ship-query" name="q" placeholder="Please type your address" autocomplete="street-address" />
+            <button type="submit">Search</button>
+        </form>
+        <button class="ship-locate" type="button" data-ship-locate><partial name="_Icons" model='"send"' /> Use your current location</button>
+        <p class="ship-msg" data-ship-msg aria-live="polite"></p>
+
+        <div class="ship-map-wrap">
+            <div class="ship-map" id="ship-map"></div>
+            <div class="ship-popup" data-ship-popup hidden>
+                <div class="ship-popup-pin" aria-hidden="true">
+                    <svg width="44" height="56" viewBox="0 0 44 56"><path d="M22 0C10 0 0 9.6 0 21.6 0 37.8 22 56 22 56s22-18.2 22-34.4C44 9.6 34 0 22 0z" fill="#ff8a00" /><circle cx="22" cy="21" r="8" fill="#fff" /></svg>
+                </div>
+                <div class="ship-popup-body">
+                    <h2 data-ship-title></h2>
+                    <p data-ship-address></p>
+                    <p class="coords" data-ship-coords></p>
+                    <button type="button" class="ship-confirm" data-ship-confirm>Confirmation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="~/js/shipping.js" asp-append-version="true"></script>
+}

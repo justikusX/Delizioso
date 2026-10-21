@@ -1,0 +1,14 @@
+@* Only on a developer machine without SMTP: the emailed link, so the flow can be tested without a mailbox. *@
+@if (TempData["DevLink"] is string devLink)
+{
+    <div class="auth-dev">
+        <b>Test mode:</b> email sending isn't set up, so the message was saved to <code>App_Data/mail</code>.
+        <a href="@devLink">Open the link from the email</a>
+    </div>
+}
+@if (TempData["MailFailed"] is true)
+{
+    <div class="auth-dev auth-mail-failed">
+        <b>We couldn't send the email right now.</b> Please try “Send the link again” in a few minutes, or contact us at delizioso@gmail.com.
+    </div>
+}

@@ -1,0 +1,9 @@
+@model (DateTime When, int Guests)
+@{
+    var culture = System.Globalization.CultureInfo.InvariantCulture;
+}
+<ul class="res-detail-list">
+    <li><partial name="_Icons" model='"calendar"' /> @Model.When.ToString("dddd, d MMMM yyyy", culture)</li>
+    <li><partial name="_Icons" model='"clock"' /> @Model.When.ToString("hh:mm tt", culture).ToLowerInvariant()</li>
+    <li><partial name="_Icons" model='"user"' /> @Model.Guests @(Model.Guests == 1 ? "person" : "people") (Standard seating)</li>
+</ul>
