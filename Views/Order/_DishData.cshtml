@@ -1,6 +1,0 @@
-@model IEnumerable<Dish>
-@* Dish catalogue for the order list script (prices are re-checked on the server at checkout). *@
-<script type="application/json" id="dish-data">
-    @Json.Serialize(Model.Select(d => new { id = d.Id, name = d.Name, price = d.Price, image = d.ImageUrl }))
-</script>
-<script>window.orderConfig = { taxRate: @OrderRules.TaxRate.ToString(System.Globalization.CultureInfo.InvariantCulture) };</script>

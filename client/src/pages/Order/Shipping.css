@@ -1,0 +1,47 @@
+.ship-card { padding-bottom: 0; overflow: hidden; }
+.ship-head { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
+.ship-head .back-circle { display: none; }
+.ship-head h1 { margin: 0; font-size: 30px; font-weight: 600; }
+.ship-search { display: flex; gap: 36px; margin-bottom: 40px; }
+.ship-search input { flex: 1; min-width: 0; height: 90px; padding: 0 48px; border: 1px solid transparent; border-radius: 14px; background: #fafafa; font: 20px var(--font); color: var(--dark); outline: none; }
+.ship-search input:focus { border-color: #5aa9e6; background: #fff; }
+.ship-search button { width: 214px; height: 90px; border: 0; border-radius: 14px; background: #5aa9e6; color: #fff; font-weight: 600; font-size: 22px; transition: filter .15s; }
+.ship-search button:hover, .co-change:hover { filter: brightness(1.05); }
+.ship-locate { display: inline-flex; align-items: center; gap: 24px; width: calc(100% - 250px); height: 90px; padding: 0 48px; border: 0; border-radius: 14px; background: #fafafa; color: #f54748; font-size: 20px; }
+.ship-locate .icon { color: #f54748; transform: rotate(0deg); }
+.ship-msg { min-height: 24px; margin: 14px 0 26px; font-size: 15px; color: var(--muted); }
+.ship-map-wrap { position: relative; margin: 0 -60px; }
+.ship-map { height: 640px; background: #e8e6e3; z-index: 0; }
+.map-pin { background: none; border: 0; }
+.ship-popup {
+    position: absolute; z-index: 500; left: 50%; top: 40px; transform: translateX(-50%);
+    width: min(560px, calc(100% - 32px)); display: flex; gap: 24px; align-items: center;
+    padding: 22px; border-radius: 20px; background: rgba(255,255,255,.88); backdrop-filter: blur(6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.12);
+}
+.ship-popup-pin { flex: 0 0 auto; width: 150px; height: 150px; border-radius: 14px; background: #fff4e7; display: grid; place-items: center; }
+.ship-popup-body { flex: 1; min-width: 0; }
+.ship-popup h2 { margin: 0 0 10px; font-size: 22px; font-weight: 600; }
+.ship-popup p { margin: 0 0 10px; font-size: 15px; line-height: 1.5; color: var(--dark); }
+.ship-confirm { width: 100%; height: 60px; margin-top: 6px; border: 0; border-radius: 10px; background: #f54748; color: #fff; font-weight: 600; font-size: 17px; }
+.ship-confirm:hover { filter: brightness(1.05); }
+
+@media (max-width: 900px) {
+    .ship-card { padding: 16px 25px 0; }
+    .ship-head { justify-content: center; position: relative; margin-bottom: 30px; }
+    .ship-head .back-circle { display: grid; position: absolute; left: 0; }
+    .ship-head h1 { font-size: 20px; font-weight: 500; }
+    .ship-search { gap: 10px; margin-bottom: 20px; }
+    .ship-search input { height: 50px; padding: 0 20px; border-radius: 8px; font-size: 13px; }
+    .ship-search button { width: 84px; height: 50px; border-radius: 8px; font-size: 13px; }
+    .ship-locate { width: auto; height: 50px; padding: 0 24px; gap: 14px; border-radius: 8px; font-size: 13px; }
+    .ship-locate .icon { width: 18px; height: 18px; }
+    .ship-msg { font-size: 12px; margin: 8px 0 14px; }
+    .ship-map-wrap { margin: 0 -25px; }
+    .ship-map { height: 540px; }
+    .ship-popup { top: 180px; gap: 12px; padding: 12px; border-radius: 12px; }
+    .ship-popup-pin { width: 100px; height: 100px; }
+    .ship-popup h2 { font-size: 15px; margin-bottom: 6px; }
+    .ship-popup p { font-size: 11px; margin-bottom: 6px; }
+    .ship-confirm { height: 40px; font-size: 12px; }
+}

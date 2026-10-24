@@ -1,5 +1,0 @@
-@* Opening part of the desktop "modal" look: dimmed page with the booking photo behind and a close button.
-   Usage: wrap page content in <section class="modal-stage"> ... </section> and include this partial first. *@
-@model string
-<div class="modal-stage-art" aria-hidden="true"><partial name="~/Views/Reservation/_BookingArt.cshtml" /></div>
-<a class="modal-close" href="@Model" aria-label="Close"><partial name="_Icons" model='"x"' /></a>

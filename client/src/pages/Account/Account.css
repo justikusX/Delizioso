@@ -1,0 +1,39 @@
+.account { padding: 80px 0 140px; }
+.account .title { margin-bottom: 50px; }
+.account .contact-sent { margin: 0 auto 40px; }
+.account-grid { display: grid; grid-template-columns: 380px 1fr; gap: 48px; align-items: start; }
+.account-card { margin-bottom: 30px; }
+.account-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--orange); color: #fff; display: grid; place-items: center; font-size: 30px; font-weight: 600; margin-bottom: 16px; }
+.account-card h2 { font-size: 24px; font-weight: 600; margin: 0 0 4px; }
+.account-email { margin: 0 0 6px; color: var(--text); word-break: break-all; }
+.account-badge { margin: 0 0 28px; font-size: 13px; color: var(--muted); }
+.account-form .field { margin-bottom: 20px; }
+.account-form .field > span:first-child { margin-bottom: 10px; }
+.account-form input { background: #fff; }
+.account-phone { display: flex; gap: 8px; }
+.account-phone select { width: 110px; height: 58px; border: 0; border-radius: 8px; background: #fff; font: 14px var(--font); padding: 0 10px; }
+.account-phone input { flex: 1; min-width: 0; }
+.account-empty { font-size: 15px; color: var(--muted); margin: 0 0 20px; }
+.account-empty a, .account-order a { color: var(--orange); font-weight: 500; }
+.account-addresses { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.account-addresses li { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 12px 14px; border-radius: 10px; background: #fff; font-size: 14px; line-height: 1.5; }
+.account-h { margin-top: 60px; }
+.account-order { padding: 22px 26px; border-radius: 16px; background: #fafafa; margin-bottom: 16px; }
+.account-order.past { opacity: .65; }
+.account-order header, .account-order footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.account-order header b { margin-right: 14px; }
+.account-order header span { color: var(--muted); font-size: 14px; }
+.account-status { padding: 4px 12px; border-radius: 20px; background: #fff; font-size: 13px !important; color: var(--dark) !important; }
+.account-items { margin: 14px 0 6px; font-size: 15px; }
+.account-where { margin: 0 0 12px; font-size: 14px; color: var(--text); }
+.account-order footer b { color: var(--orange); font-size: 18px; }
+
+@media (max-width: 900px) {
+    .account { padding: 24px 0 60px; }
+    .account .title { font-size: 30px; margin-bottom: 24px; }
+    .account-grid { grid-template-columns: 1fr; gap: 10px; }
+    .account-order { padding: 16px 18px; }
+    .account-order header { flex-wrap: wrap; }
+    .account-order header span { font-size: 12px; }
+    .account-h { margin-top: 40px; }
+}

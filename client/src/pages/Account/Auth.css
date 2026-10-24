@@ -1,0 +1,74 @@
+.auth-body { min-height: 100vh; }
+.auth { display: grid; grid-template-columns: 637fr 803fr; min-height: 100vh; }
+.auth-panel { position: relative; display: flex; flex-direction: column; padding: 39px 39px 40px; }
+.auth-logo .logo-mark { width: 33px; height: 33px; font-size: 14px; }
+.auth-form { width: 100%; max-width: 414px; margin: 80px 0 40px 72px; }
+.auth-form h1 { font-size: 44px; font-weight: 600; margin: 0 0 18px; }
+.auth-switch { font-size: 14px; color: var(--text); margin: 0 0 56px; }
+.auth-switch a { color: #0a8ed9; font-weight: 500; }
+.auth-notice { background: rgba(255,138,0,.1); color: var(--text); border-radius: 8px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin: -32px 0 24px; }
+.auth-error ul { list-style: none; margin: 0 0 16px; padding: 0; color: #d93025; font-size: 13px; }
+.auth-error.validation-summary-valid { display: none; }
+
+.field { display: block; margin-bottom: 30px; }
+.field > span:first-child { display: block; font-size: 14px; font-weight: 500; margin-bottom: 20px; }
+.field input, .field select {
+    width: 100%; height: 58px; padding: 0 30px;
+    border: 1px solid transparent; border-radius: 8px;
+    background: #fafafa; color: var(--dark);
+    font: 14px var(--font); outline: none; transition: border-color .15s, background .15s;
+}
+.field input::placeholder { color: #a8a39d; }
+.field input:focus, .field select:focus { border-color: var(--orange); background: #fff; }
+.field input.input-validation-error { border-color: #d93025; }
+.field-error { display: block; color: #d93025; font-size: 12px; margin-top: 6px; }
+
+.auth-row { display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: var(--text); margin: 4px 0 30px; }
+.auth-row a:hover { color: var(--orange); }
+.check { display: inline-flex; align-items: center; gap: 16px; cursor: pointer; }
+.check input {
+    appearance: none; width: 26px; height: 26px; margin: 0;
+    border: 1px solid #d0ccc7; border-radius: 6px; cursor: pointer; display: grid; place-items: center;
+}
+.check input:checked { background: var(--orange); border-color: var(--orange); }
+.check input:checked::after { content: ''; width: 6px; height: 12px; border: solid #fff; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); }
+
+.auth-submit {
+    width: 100%; height: 58px; border: 0; border-radius: 8px;
+    background: var(--orange); color: #fff; font-weight: 500; font-size: 14px;
+    transition: filter .15s;
+}
+.auth-submit:hover { filter: brightness(1.06); }
+.auth-google {
+    width: 100%; height: 58px; margin-top: 20px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    background: #fff; border: 1px solid #c9c0b6; border-radius: 8px;
+    color: var(--dark); font-weight: 500; font-size: 15px; transition: border-color .15s;
+}
+.auth-google:hover { border-color: var(--orange); }
+.auth-copyright { margin: auto 0 0; text-align: center; font-size: 14px; color: #c9bfb2; }
+.auth-image { background: url('/img/auth-pancakes.jpg') center / cover; }
+
+@media (max-width: 1024px) {
+    .auth-form { margin-left: 0; margin-inline: auto; }
+}
+@media (max-width: 768px) {
+    .auth { grid-template-columns: 1fr; }
+    .auth-image { display: none; }
+    .auth-panel { padding: 24px 16px 24px; }
+    .auth-form { margin-top: 40px; }
+    .auth-form h1 { font-size: 34px; }
+    .auth-switch { margin-bottom: 36px; }
+    .field > span:first-child { margin-bottom: 12px; }
+    .field { margin-bottom: 22px; }
+}
+
+.auth-text { font-size: 14px; line-height: 1.7; color: var(--text); margin: -30px 0 30px; }
+.auth-bottom { margin: 28px 0 0; }
+.auth-dev { margin: 0 0 24px; padding: 14px 16px; border-radius: 8px; background: #fff8e1; border: 1px dashed #ffb300; font-size: 13px; line-height: 1.6; color: var(--text); }
+.auth-dev a { color: var(--orange); font-weight: 600; }
+.auth-dev code { font-size: 12px; }
+.auth-resend { margin-top: 12px; }
+.auth-resend button { border: 0; background: none; padding: 0; color: #0a8ed9; font-size: 14px; text-decoration: underline; }
+.auth-mail-failed { background: #ffebee; border-color: #e57373; }
+.auth-google-notice { margin: 16px 0 0; }

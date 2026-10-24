@@ -1,0 +1,67 @@
+.site-header { padding-top: 51px; position: relative; z-index: 10; }
+.header-inner { display: flex; align-items: center; gap: 24px; }
+.logo { display: flex; align-items: center; gap: 18px; font-weight: 600; font-size: 14px; }
+.logo-mark {
+    width: 51px; height: 51px; border-radius: 50%;
+    background: var(--orange); color: #fff;
+    display: grid; place-items: center;
+    font-size: 25px; font-weight: 600;
+}
+.logo-text span { color: var(--orange); }
+.logo-light { color: #fff; }
+
+.main-nav { display: flex; gap: 48px; margin-left: auto; font-size: 14px; }
+.main-nav a { transition: color .15s; }
+.main-nav a:hover, .main-nav a.active { color: var(--orange); }
+
+.header-actions { display: flex; align-items: center; gap: 25px; margin-left: auto; }
+.cart {
+    position: relative;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #f9f9f9;
+    display: grid; place-items: center;
+}
+.cart-badge {
+    position: absolute; top: 7px; right: 14px;
+    min-width: 16px; height: 16px; padding: 0 4px;
+    border-radius: 8px; background: #f54748; color: #fff;
+    font-size: 8px; font-weight: 500;
+    display: grid; place-items: center;
+}
+
+.nav-toggle { display: none; background: none; border: 0; padding: 8px; margin-left: auto; }
+.nav-toggle svg { display: block; }
+.nav-icon-close, .nav-open .nav-icon-grid { display: none !important; }
+.nav-open .nav-icon-close { display: block !important; }
+
+.user-name { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 500; }
+@media (max-width: 768px) { .user-name { display: none; } }
+.nav-account { display: none; }
+@media (max-width: 1024px) {
+    .nav-account { display: block; border-top: 1px solid #f0eeec; margin-top: 4px; }
+    .nav-account button { border: 0; background: none; padding: 14px 24px; font-size: 16px; color: inherit; width: 100%; text-align: left; }
+}
+
+@media (max-width: 1200px) {
+    .main-nav { gap: 28px; }
+}
+
+@media (max-width: 1024px) {
+    .nav-toggle { display: block; order: 3; margin-left: 0; }
+    .header-actions { margin-left: auto; }
+    .main-nav {
+        position: absolute; top: 100%; left: 16px; right: 16px;
+        flex-direction: column; gap: 0;
+        background: #fff; border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,.12);
+        padding: 8px 0; margin: 12px 0 0;
+        display: none;
+    }
+    .main-nav a { padding: 14px 24px; font-size: 16px; }
+    .nav-open .main-nav { display: flex; }
+}
+
+@media (max-width: 768px) {
+    .site-header { padding-top: 24px; }
+    .header-actions .btn-sm, .header-actions form { display: none; }
+}

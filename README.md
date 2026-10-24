@@ -1,71 +1,94 @@
 # Delizioso — сайт итальянского ресторана
 
-ASP.NET Core MVC (.NET 10) + Entity Framework Core + SQL Server (LocalDB).
+React + Vite (клиент), Node.js + Express (сервер), PostgreSQL (база данных).
 Меню, онлайн-заказ с корзиной и доставкой на карте, бронирование столиков, регистрация по почте и через Google, личный кабинет.
 
-## Запуск на новом компьютере
+## Структура
+
+```
+client/                 React-приложение (Vite)
+  public/img/           изображения
+  src/main.jsx          точка входа и маршруты
+  src/components/       общие компоненты: шапка, подвал, сетка меню, список заказа, модальные окна
+  src/pages/            страницы: Home, Menu, About, Order, Reservation, Contact, Account
+  src/context/          состояние авторизации и корзины
+  src/api.js            запросы к серверу
+  src/data.js           правила бронирования и заказа, справочники
+server/                 Express-сервер
+  index.js              запуск сервера и подключение маршрутов
+  db.js                 подключение к PostgreSQL, создание базы и таблиц
+  db/schema.sql         таблицы, индексы и представления
+  db/seed.sql           начальные данные (меню, шефы, отзывы, ваучер)
+  routes/               API: меню, заказы, брони, контакты, авторизация, кабинет
+  services/             письма, токены, работа с клиентами
+database/               скрипты резервного копирования PostgreSQL
+```
+
+## Запуск
 
 ### 1. Установить программы
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-- **SQL Server LocalDB** — ставится вместе с Visual Studio или отдельно: [SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads) → *Download Media* → *LocalDB*
-- [Git](https://git-scm.com/download/win)
-- По желанию: [VS Code](https://code.visualstudio.com/) с расширением **C# Dev Kit** и [SSMS](https://learn.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms)
+- [Node.js 20+](https://nodejs.org/)
+- [PostgreSQL 16+](https://www.postgresql.org/download/) (вместе с ним ставится pgAdmin)
+- [Git](https://git-scm.com/)
 
-### 2. Скачать проект
+### 2. Скачать проект и установить пакеты
 ```bash
 git clone https://github.com/justikusX/Delizioso.git
 cd Delizioso
-dotnet tool restore
+npm run setup
 ```
 
-### 3. База данных — выберите один вариант
-**А. Перенести все данные** (клиенты, заказы, брони) из резервной копии `Database/Delizioso.bak`:
+### 3. Настроить сервер
+Скопировать `server/.env.example` в `server/.env` и указать пароль пользователя `postgres`:
+```
+DB_PASSWORD=ваш_пароль
+```
+База `delizioso`, все таблицы и начальные данные создаются автоматически при первом запуске сервера.
+
+Почта и вход через Google необязательны. Без SMTP письма сохраняются в папку `server/mail`,
+а на странице появляется ссылка из письма. Для Google нужно заполнить `GOOGLE_CLIENT_ID` и `GOOGLE_CLIENT_SECRET`.
+
+### 4. Запустить
+В двух терминалах:
 ```bash
-powershell -ExecutionPolicy Bypass -File Database\restore-db.ps1
+npm run server
+npm run client
 ```
+Открыть http://localhost:5173
 
-**Б. Начать с чистой базы**: ничего делать не нужно. При первом запуске сайт сам создаст базу `Delizioso`
-со всеми таблицами, меню (18 блюд), шефами, отзывами и ваучером `FREETOEAT`.
-
-### 4. Секреты (почта и Google)
-Пароли не хранятся в репозитории. На новом компьютере их нужно ввести заново:
+### Сборка
 ```bash
-dotnet user-secrets set "Email:Smtp:Host" "smtp.gmail.com"
-dotnet user-secrets set "Email:Smtp:User" "ваша_почта@gmail.com"
-dotnet user-secrets set "Email:Smtp:Password" "пароль_приложения_gmail"
-dotnet user-secrets set "Email:From" "ваша_почта@gmail.com"
-dotnet user-secrets set "Authentication:Google:ClientId" "..."
-dotnet user-secrets set "Authentication:Google:ClientSecret" "..."
+npm run build
+npm start
 ```
-Без них сайт тоже работает: письма сохраняются в `App_Data/mail`, а кнопка Google показывает, что вход не настроен.
+Сервер раздаёт собранный клиент из `client/dist` на http://localhost:5000
 
-### 5. Запустить
+## База данных
+Таблицы: `categories`, `dishes`, `chefs`, `testimonials`, `users`, `addresses`, `reservations`,
+`orders`, `order_items`, `vouchers`, `contact_messages`.
+Представления для отчётов: `vw_customers`, `vw_order_details`, `vw_reservation_details`.
+
+Резервная копия и восстановление (PowerShell):
 ```bash
-dotnet run
+powershell -ExecutionPolicy Bypass -File database\backup-db.ps1
+powershell -ExecutionPolicy Bypass -File database\restore-db.ps1
 ```
-Открыть http://localhost:5223
 
-## Перед переносом: сохранить свежие данные
-На старом компьютере обновить резервную копию и отправить её в GitHub:
-```bash
-powershell -ExecutionPolicy Bypass -File Database\backup-db.ps1
-git add Database/Delizioso.bak
-git commit -m "Update database backup"
-git push
-```
-На новом: `git pull`, затем шаг 3А.
-
-## База данных в SSMS
-Сервер: `(localdb)\MSSQLLocalDB`, Windows Authentication, база `Delizioso`. Готовые отчёты (папка *Views*):
-- `vw_Customers` — все клиенты: аккаунт или гость, телефон, сколько заказов и на какую сумму, последний адрес
-- `vw_OrderDetails` — кто что заказал и куда
-- `vw_ReservationDetails` — все брони
-
-## Структура
-- `Controllers/` — страницы (Home, Menu, About, Order, Reservation, Contact, Account)
-- `Models/` — таблицы базы и модели форм
-- `Data/AppDbContext.cs` — настройка базы и начальные данные (меню и т. д.)
-- `Migrations/` — история изменений структуры базы (применяется автоматически при запуске)
-- `Services/` — отправка почты, ссылки подтверждения, работа с клиентами
-- `Views/` — разметка страниц, `wwwroot/` — стили, скрипты, картинки
-- `Database/` — резервная копия базы и скрипты backup/restore
+## API
+| Метод | Адрес | Назначение |
+|---|---|---|
+| GET | /api/home | данные главной страницы |
+| GET | /api/menu | категории и блюда |
+| GET | /api/vouchers/:code | проверка ваучера |
+| POST | /api/orders | оформление заказа |
+| GET | /api/orders/:code | заказ по коду |
+| POST | /api/reservations/check | проверка даты и времени брони |
+| POST | /api/reservations | новая бронь или изменение |
+| GET | /api/reservations/:code | бронь по коду |
+| PATCH | /api/reservations/:code/notes | повод и пожелания |
+| POST | /api/reservations/:code/cancel | отмена брони |
+| POST | /api/contact | сообщение с формы обратной связи |
+| POST | /api/auth/register, /login, /confirm, /resend, /forgot, /reset, /google | авторизация |
+| GET | /api/account | личный кабинет |
+| PUT | /api/account/profile | изменение профиля |
+| DELETE | /api/account/addresses/:id | удаление адреса |
