@@ -29,7 +29,7 @@ export default function Header() {
     useEffect(() => setOpen(false), [location.pathname]);
 
     return (
-        <header className={open ? 'site-header nav-open' : 'site-header'}>
+        <header className={['site-header', open && 'nav-open', user && 'user-in'].filter(Boolean).join(' ')}>
             <div className="container header-inner">
                 <Logo />
 

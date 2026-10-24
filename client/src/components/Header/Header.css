@@ -11,7 +11,7 @@
 .logo-light { color: #fff; }
 
 .main-nav { display: flex; gap: 48px; margin-left: auto; font-size: 14px; }
-.main-nav a { transition: color .15s; }
+.main-nav a { transition: color .15s; white-space: nowrap; }
 .main-nav a:hover, .main-nav a.active { color: var(--orange); }
 
 .header-actions { display: flex; align-items: center; gap: 25px; margin-left: auto; }
@@ -44,6 +44,13 @@
 
 @media (max-width: 1200px) {
     .main-nav { gap: 28px; }
+}
+
+@media (min-width: 1025px) {
+    .user-in .header-actions { gap: 16px; }
+}
+@media (min-width: 1201px) {
+    .user-in .main-nav { gap: 36px; }
 }
 
 @media (max-width: 1024px) {
